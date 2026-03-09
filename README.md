@@ -84,8 +84,8 @@ cd itero && pip install -e .
      - id: tester
        role: Tester
        agent:
-         custom_command: "pytest ."
-       prompt: "Run tests. If fail, create test_report.md in {{run_dir}}"
+         custom_command: "gemini -y -p '{prompt}'"
+       prompt: "Run tests with pytest ., If fail, create test_report.md in {{run_dir}}"
        goto:
          default: end
          when_files_exist:
