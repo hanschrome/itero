@@ -85,11 +85,11 @@ cd itero && pip install -e .
        role: Tester
        agent:
          custom_command: "pytest ."
-       prompt: "Run tests. If fail, create test_report001.md in {{run_dir}}"
+       prompt: "Run tests. If fail, create test_report.md in {{run_dir}}"
        goto:
          default: end
          when_files_exist:
-           - files: [test_report001.md]
+           - files: [test_report.md]
              then: developer
    ```
 
