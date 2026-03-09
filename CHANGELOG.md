@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `goto` with `when_files_exist` (including `then: end`)
 - `CustomCommandAgent` with `{prompt}` and `{run_dir}` placeholders
 - Prompt variables: `{{input_file}}`, `{{run_dir}}`, `{{project_root}}`, `{{input_content}}`
-- Run directory per execution (`run/<uuid>/`)
+- Run directory per execution (`.itero/run/<uuid>/`)
 - Example workflows: simple-dev-tester, full-pipeline
 - Unit and integration tests (39 tests)
 - MIT License

@@ -68,3 +68,4 @@ Thumbs.db
 
 # Itero run output
 run/
+.itero/run/

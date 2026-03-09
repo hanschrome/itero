@@ -39,12 +39,12 @@ itero --help
 mkdir .itero
 ```
 
-### Step 4. Add `run/` to Your `.gitignore`
+### Step 4. Add `.itero/run/` to Your `.gitignore`
 
-Itero writes execution output to `run/<uuid>/`. You don't want to commit those:
+Itero writes execution output to `.itero/run/<uuid>/`. You don't want to commit those:
 
 ```bash
-echo "run/" >> .gitignore
+echo ".itero/run/" >> .gitignore
 ```
 
 ---
