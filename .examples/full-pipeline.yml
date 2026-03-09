@@ -1,0 +1,77 @@
+name: Full Pipeline (Tech Lead, Dev, Tester, QA)
+steps:
+  - id: tech_lead_define
+    role: Tech Lead
+    agent:
+      custom_command: "echo 'TechLead: {prompt}'"
+    prompt: |
+      Read {{input_file}} and create ROADMAP.md in {{run_dir}}
+      with the tasks to execute.
+    goto: tech_lead_pick
+
+  - id: tech_lead_pick
+    role: Tech Lead
+    agent:
+      custom_command: "echo 'TechLead: {prompt}'"
+    prompt: |
+      Update ROADMAP.md to mark the current task and ensure
+      ROADMAP.md exists in {{run_dir}}.
+      Generate a fresh uuid v4 for the task.
+      Create a task_{uuid}.md in {{run_dir}} with the task details as a Jira ticket with technical details.
+      Create or update current_task.md in {{run_dir}} with the current task name.
+      If there are no more tasks, create end_report.md in {{run_dir}}.
+    when:
+      run_if_files_exist: [ROADMAP.md]
+    goto:
+      default: developer
+      when_files_exist:
+        - files: [end_report.md]
+          then: end
+
+  - id: developer
+    role: Developer
+    agent:
+      custom_command: "echo 'Developer: {prompt}'"
+    prompt: |
+      Implement the changes from the task_{uuid}.md, check the current_task.md in {{run_dir}} to know the current task.
+      You may have a test_report.md in {{run_dir}}, if so, you should fix the issues.
+    when:
+      run_if_files_exist: [ROADMAP.md]
+    goto: tester
+
+  - id: tester
+    role: Tester
+    agent:
+      custom_command: "echo 'Tester: {prompt}'"
+    prompt: |
+      Remove test_report.md if exists in {{run_dir}}.
+      Run tests per project instructions. If they fail, create a test_report.md in {{run_dir}}.
+    when:
+      run_if_files_exist: [ROADMAP.md]
+    goto:
+      default: qa
+      when_files_exist:
+        - files: [test_report.md]
+          then: developer
+
+  - id: qa
+    role: QA
+    agent:
+      custom_command: "echo 'QA: {prompt}'"
+    prompt: |
+      Remove qa.md if exists in {{run_dir}}.
+      Review against the task_{uuid}.md and current_task.md in {{run_dir}}. If changes needed,
+      create qa.md in {{run_dir}}.
+    goto:
+      default: tech_lead_commit
+      when_files_exist:
+        - files: [qa.md]
+          then: tech_lead_pick
+
+  - id: tech_lead_commit
+    role: Tech Lead
+    agent:
+      custom_command: "echo 'TechLead commit: {prompt}'"
+    prompt: |
+      Commit and push the changes.
+    goto: tech_lead_pick

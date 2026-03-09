@@ -1,0 +1,9 @@
+# Index of workflows. Copy this and the workflow files to your .itero/
+workflows:
+  - name: simple-dev-tester
+    file: simple-dev-tester.yml
+    description: Developer + Tester loop (simplest example)
+
+  - name: full-pipeline
+    file: full-pipeline.yml
+    description: Tech Lead, Developer, Tester, QA with loops

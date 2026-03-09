@@ -1,0 +1,67 @@
+name: Full Pipeline (Tech Lead, Dev, Tester, QA)
+steps:
+  - id: tech_lead_define
+    role: Tech Lead
+    agent:
+      custom_command: "echo 'TechLead: {prompt}'"
+    prompt: |
+      Read {{input_file}} and create task001.md in {{run_dir}}
+      with the tasks to execute.
+    goto: tech_lead_pick
+
+  - id: tech_lead_pick
+    role: Tech Lead
+    agent:
+      custom_command: "echo 'TechLead: {prompt}'"
+    prompt: |
+      Update task001.md to mark the current task and ensure
+      task001.md exists in {{run_dir}}.
+    when:
+      run_if_files_exist: [task001.md]
+    goto: developer
+
+  - id: developer
+    role: Developer
+    agent:
+      custom_command: "echo 'Developer: {prompt}'"
+    prompt: |
+      Implement the changes from task001.md in {{run_dir}}.
+    when:
+      run_if_files_exist: [task001.md]
+    goto: tester
+
+  - id: tester
+    role: Tester
+    agent:
+      custom_command: "echo 'Tester: {prompt}'"
+    prompt: |
+      Run tests per project instructions. If they fail,
+      create test_report001.md in {{run_dir}}.
+    when:
+      run_if_files_exist: [task001.md]
+    goto:
+      default: qa
+      when_files_exist:
+        - files: [test_report001.md]
+          then: developer
+
+  - id: qa
+    role: QA
+    agent:
+      custom_command: "echo 'QA: {prompt}'"
+    prompt: |
+      Review against original instructions. If changes needed,
+      create qa001.md in {{run_dir}}.
+    goto:
+      default: tech_lead_commit
+      when_files_exist:
+        - files: [qa001.md]
+          then: tech_lead_pick
+
+  - id: tech_lead_commit
+    role: Tech Lead
+    agent:
+      custom_command: "echo 'TechLead commit: {prompt}'"
+    prompt: |
+      Commit and push the changes.
+    goto: end

@@ -1,0 +1,24 @@
+name: Simple Dev + Tester
+steps:
+  - id: developer
+    role: Developer
+    agent:
+      custom_command: "echo 'Developer says: {prompt}'"
+    prompt: |
+      Implement the changes described in {{input_file}}.
+      Read {{input_content}} for instructions.
+    goto: tester
+
+  - id: tester
+    role: Tester
+    agent:
+      custom_command: "echo 'Tester says: {prompt}'"
+    prompt: |
+      Run the project tests. If they fail, create test_report001.md
+      in the run directory ({{run_dir}}) with the failure details.
+      If all pass, do not create any report file.
+    goto:
+      default: end
+      when_files_exist:
+        - files: [test_report001.md]
+          then: developer
