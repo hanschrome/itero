@@ -30,7 +30,7 @@ Itero breaks this cycle by letting you define workflows where different roles co
 
 Itero is an open source tool that you clone into your project to run agent workflows. Create a `.itero/` directory, add your workflow definitions in YAML, and run them in context of your repository.
 
-**New here?** Follow the **[Step-by-Step Guide](STEP_BY_STEP.md)** to add Itero and create your first Dev → Tester workflow with Gemini.
+**New here?** Follow the **[Step-by-Step Guide](STEP_BY_STEP.md)** to add Itero and create your first Dev → Tester workflow with Gemini. See the **[Roadmap](ROADMAP.md)** for planned features.
 
 ## Installation
 
@@ -233,7 +233,7 @@ pytest tests/ -v --cov=itero --cov-report=term-missing
 
 ## Known Limitations
 
-- **Single agent type:** Only `custom_command` is supported. Use it to call any CLI (e.g. `gemini -y -p "{prompt}"`, `cursor agent -p "{prompt}"`). Native adapters for Cursor, Claude, or Gemini may come in future versions.
+- **Single agent type:** Only `custom_command` is supported. Use it to call any CLI (e.g. `gemini -y -p "{prompt}"`, `cursor agent -p "{prompt}"`). See [ROADMAP.md](ROADMAP.md) for planned native adapters.
 - **No parallel steps:** Steps run sequentially.
 - **Max 100 steps per run:** Workflows hit a safety limit to prevent infinite loops.
 
