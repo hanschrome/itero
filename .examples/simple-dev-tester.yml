@@ -14,11 +14,11 @@ steps:
     agent:
       custom_command: "echo 'Tester says: {prompt}'"
     prompt: |
-      Run the project tests. If they fail, create test_report001.md
+      Delete test_report.md if exists in {{run_dir}}. Run the project tests. If they fail, create test_report.md
       in the run directory ({{run_dir}}) with the failure details.
       If all pass, do not create any report file.
     goto:
       default: end
       when_files_exist:
-        - files: [test_report001.md]
+        - files: [test_report.md]
           then: developer
