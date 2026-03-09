@@ -37,8 +37,12 @@ Itero is an open source tool that you clone into your project to run agent workf
 
 ## Installation
 
-**Quick install with an agent:** Paste this to Gemini, Claude, Cursor, Aider, or similar:  
-*"Install this on my codebase: https://github.com/hanschrome/itero/blob/main/INSTALL_USING_AGENT.md"*  
+**✨ Quick install with an agent ✨** Paste this to Gemini, Claude, Cursor, Aider, or similar:  
+
+```prompt
+Install this on my codebase: https://github.com/hanschrome/itero/blob/main/INSTALL_USING_AGENT.md
+```
+
 See [INSTALL_USING_AGENT.md](INSTALL_USING_AGENT.md) for the full agent instructions.
 
 **Manual install** — Clone Itero into your project:
