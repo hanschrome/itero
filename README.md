@@ -112,15 +112,15 @@ your-project/
 ├── .itero/               # Your workflows
 │   ├── workflows.yml    # Index of workflows
 │   ├── dev-with-tests.yml
+│   ├── run/             # Execution outputs (one UUID per run)
+│   │   └── <uuid>/
+│   │       ├── task001.md
+│   │       └── ...
 │   └── ...
-├── run/                  # Execution outputs (one UUID per run)
-│   └── <uuid>/
-│       ├── task001.md
-│       └── ...
 └── itero/                # Itero (cloned or submodule)
 ```
 
-Add `run/` to your `.gitignore`.
+Add `.itero/run/` to your `.gitignore` to avoid committing execution outputs.
 
 ## Makefile Integration
 

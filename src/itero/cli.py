@@ -33,9 +33,8 @@ def _get_project_root() -> Path:
 
 
 def _get_run_dir(project_root: Path) -> Path:
-    """Run directory for this itero installation."""
-    # Itero may be in project_root/itero or project_root, use project_root/run
-    return project_root / "run"
+    """Run directory for this itero installation (under .itero/ to avoid collisions)."""
+    return project_root / ".itero" / "run"
 
 
 @app.command("list")
@@ -80,10 +79,20 @@ def run_workflow(
     run_dir = _get_run_dir(root)
     loader = YamlWorkflowLoader()
     fs = RealFileSystem()
+
+    def _on_step_complete(step_id: str, role: str, output: str) -> None:
+        typer.echo(f"  ✓ {step_id} ({role}) completed")
+        if output.strip():
+            stripped = output.strip()
+            preview = ("..." + stripped[-200:]) if len(stripped) > 200 else stripped
+            for line in preview.split("\n"):
+                typer.echo(f"    {line}")
+
     handler = RunWorkflowHandler(
         workflow_loader=loader,
         file_system=fs,
         run_base_dir=run_dir,
+        on_step_complete=_on_step_complete,
     )
 
     try:

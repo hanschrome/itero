@@ -1,6 +1,7 @@
 """Handler: run a workflow."""
 
 import uuid
+from collections.abc import Callable
 from pathlib import Path
 
 from itero.application.agent_factory import create_agent
@@ -21,10 +22,12 @@ class RunWorkflowHandler:
         workflow_loader: WorkflowLoader,
         file_system: FileSystem,
         run_base_dir: Path,
+        on_step_complete: Callable[[str, str, str], None] | None = None,
     ) -> None:
         self._loader = workflow_loader
         self._fs = file_system
         self._run_base = run_base_dir
+        self._on_step_complete = on_step_complete
 
     def handle(self, command: RunWorkflowCommand) -> Path:
         """Execute workflow, return run directory path."""
@@ -89,5 +92,8 @@ class RunWorkflowHandler:
             prompt = render_prompt(step.prompt, context)
             output = agent.execute(prompt, context)
             context.add_step_output(step.id, output)
+
+            if self._on_step_complete:
+                self._on_step_complete(step.id, step.role, output)
 
             current_id = resolve_goto(step, context.run_dir, self._fs)
