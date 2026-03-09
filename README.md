@@ -30,11 +30,18 @@ Itero breaks this cycle by letting you define workflows where different roles co
 
 Itero is an open source tool that you clone into your project to run agent workflows. Create a `.itero/` directory, add your workflow definitions in YAML, and run them in context of your repository.
 
+**Install with one line** (Gemini, Claude, Cursor, Aider, or any agent):  
+*"Install this on my codebase: https://github.com/hanschrome/itero/blob/main/INSTALL_USING_AGENT.md"*
+
 **New here?** Follow the **[Step-by-Step Guide](STEP_BY_STEP.md)** to add Itero and create your first Dev → Tester workflow with Gemini. See the **[Roadmap](ROADMAP.md)** for planned features.
 
 ## Installation
 
-Clone Itero into your project:
+**Quick install with an agent:** Paste this to Gemini, Claude, Cursor, Aider, or similar:  
+*"Install this on my codebase: https://github.com/hanschrome/itero/blob/main/INSTALL_USING_AGENT.md"*  
+See [INSTALL_USING_AGENT.md](INSTALL_USING_AGENT.md) for the full agent instructions.
+
+**Manual install** — Clone Itero into your project:
 
 ```bash
 git clone https://github.com/hanschrome/itero.git
