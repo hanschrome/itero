@@ -37,6 +37,7 @@ class YamlWorkflowLoader:
         if not data:
             raise ValueError(f"Empty workflow file: {path}")
         name = data.get("name", path.stem)
+        infinite = data.get("infinite", False)
         raw_steps = data.get("steps", [])
         steps = []
         for i, s in enumerate(raw_steps):
@@ -45,7 +46,7 @@ class YamlWorkflowLoader:
             )
             step = self._parse_step(s, default_next)
             steps.append(step)
-        return Workflow(name=name, steps=steps)
+        return Workflow(name=name, steps=steps, infinite=infinite)
 
     def _parse_step(self, s: dict, default_next: str = "end") -> Step:
         step_id = s["id"]

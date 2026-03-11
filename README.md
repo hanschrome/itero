@@ -84,6 +84,7 @@ cd itero && pip install -e .
 
    ```yaml
    name: Dev with Tests
+   # optional: infinite: true   # allow unbounded steps (default: false, max 100)
    steps:
      - id: developer
        role: Developer
@@ -246,7 +247,7 @@ pytest tests/ -v --cov=itero --cov-report=term-missing
 
 - **Single agent type:** Only `custom_command` is supported. Use it to call any CLI (e.g. `gemini -y -p "{prompt}"`, `cursor agent -p "{prompt}"`). See [ROADMAP.md](ROADMAP.md) for planned native adapters.
 - **No parallel steps:** Steps run sequentially.
-- **Max 100 steps per run:** Workflows hit a safety limit to prevent infinite loops.
+- **Max 100 steps per run (default):** Workflows hit a safety limit to prevent infinite loops. Set `infinite: true` in the workflow YAML to allow unbounded steps.
 
 ## Contributing
 

@@ -46,6 +46,7 @@ class Workflow:
 
     name: str
     steps: list[Step]
+    infinite: bool = False
     steps_by_id: dict[str, Step] = field(default_factory=dict, repr=False)
 
     def __post_init__(self) -> None:

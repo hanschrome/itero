@@ -73,11 +73,13 @@ class RunWorkflowHandler:
         self, workflow: Workflow, context: ExecutionContext
     ) -> None:
         visited: set[str] = set()
-        max_steps = 100
+        max_steps: int | None = None if workflow.infinite else 100
         step_count = 0
         current_id = workflow.steps[0].id if workflow.steps else None
 
-        while current_id and current_id != "end" and step_count < max_steps:
+        while current_id and current_id != "end" and (
+            max_steps is None or step_count < max_steps
+        ):
             step_count += 1
             if current_id not in workflow.steps_by_id:
                 raise ValueError(f"Unknown step id: {current_id}")
